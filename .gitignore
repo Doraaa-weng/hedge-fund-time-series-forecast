@@ -1,0 +1,37 @@
+# Data (large files, do not push)
+ts-forecasting/*.parquet
+*.parquet
+
+# Trained models
+*.pkl
+*.joblib
+
+# Submission output (optional)
+submission.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+training_output.log
+
+# Local-only docs (not for public repo)
+如何上传到GitHub_中文.md
+项目介绍_中文.md

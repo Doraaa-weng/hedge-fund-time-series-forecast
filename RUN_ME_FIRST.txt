@@ -1,0 +1,28 @@
+═══════════════════════════════════════════════════════════════
+  HOW TO RUN THIS PROJECT - COPY THESE COMMANDS
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Open Terminal
+  - Press Command + Space
+  - Type "Terminal" and press Enter
+
+STEP 2: Copy and paste this line (then press Enter):
+  cd "/Users/doraweng/Documents/Kaggle Project/Hedege Fund-Time series forecast"
+
+STEP 3: Copy and paste this line (then press Enter):
+  ./run_train_quick.sh
+
+STEP 4: Wait 2-5 minutes for it to finish!
+
+═══════════════════════════════════════════════════════════════
+
+If you get "permission denied", run this first:
+  chmod +x run_train_quick.sh
+
+Then try Step 3 again.
+
+═══════════════════════════════════════════════════════════════
+
+For more help, see: HOW_TO_RUN.md
+
+═══════════════════════════════════════════════════════════════

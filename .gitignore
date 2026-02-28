@@ -31,7 +31,3 @@ Thumbs.db
 # Logs
 *.log
 training_output.log
-
-# Local-only docs (not for public repo)
-如何上传到GitHub_中文.md
-项目介绍_中文.md

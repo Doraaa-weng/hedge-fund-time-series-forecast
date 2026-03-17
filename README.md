@@ -1,12 +1,16 @@
-# Time Series Forecasting — Kaggle Competition
+# Hierarchical Time Series Forecasting
 
-Forecasting pipeline for the [Kaggle TS Forecasting](https://www.kaggle.com/competitions/ts-forecasting) competition using a direct LightGBM approach with hierarchy-aware categorical features and exogenous lag features.
+This project was built as a realistic applied machine learning exercise around a public hedge-fund-style forecasting task from [Kaggle TS Forecasting](https://www.kaggle.com/competitions/ts-forecasting). My motivation was not just to participate in a competition, but to use a noisy, large-scale, multi-horizon prediction problem to practice the parts of modeling work that matter in real teams: structuring an end-to-end pipeline, designing leakage-aware validation, engineering stable features, and iterating on models with clear evaluation logic.
+
+It highlights how I approach ambiguous forecasting problems with both modeling and implementation discipline. Instead of treating the task as a notebook-only experiment, I organized it as a reproducible project with separate training, inference, configuration, and packaging steps. The result is a compact repository that demonstrates practical skills in time series feature engineering, hierarchical tabular modeling, experiment organization, and deployable prediction workflows.
 
 ## Overview
 
+- Source problem: a hedge-fund-style forecasting task framed as a public Kaggle challenge
 - Task: multi-horizon regression for `y_target` at horizons 1, 3, 10, and 25
 - Data: approximately 5.3M training rows and 1.4M test rows
 - Model: direct LightGBM with global time-based validation
+- Evaluation focus: weighted error on future forecasts under a held-out test setting
 - Output: `outputs/submission.csv`
 
 ## Repository Layout

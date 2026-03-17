@@ -1,6 +1,5 @@
 #!/bin/bash
 # Build kaggle-project.zip for uploading to Kaggle (Datasets or Notebooks).
-# Excludes large/data files and Chinese doc; includes code, config, README.
 
 set -e
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"

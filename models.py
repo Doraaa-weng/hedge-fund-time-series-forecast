@@ -24,7 +24,7 @@ except (ImportError, OSError, Exception):
 try:
     import xgboost as xgb
     XGBOOST_AVAILABLE = True
-except (ImportError, OSError, Exception):
+except (ImportError, OSError, Exception):   
     XGBOOST_AVAILABLE = False
     xgb = None
 
@@ -42,6 +42,14 @@ class TimeSeriesModel:
               weights_train: pd.Series = None, weights_val: pd.Series = None):
         """Train the model"""
         raise NotImplementedError
+
+    @staticmethod
+    def _clean_features(X: pd.DataFrame) -> pd.DataFrame:
+        """Defensively clean feature matrices before handing them to estimators."""
+        X = X.replace([np.inf, -np.inf], np.nan)
+        if X.isna().values.any():
+            X = X.fillna(0.0)
+        return X
     
     def predict(self, X: pd.DataFrame) -> np.ndarray:
         """Make predictions"""
@@ -69,6 +77,9 @@ class LightGBMModel(TimeSeriesModel):
               X_val: pd.DataFrame = None, y_val: pd.Series = None,
               weights_train: pd.Series = None, weights_val: pd.Series = None):
         """Train LightGBM model"""
+        X_train = self._clean_features(X_train)
+        if X_val is not None:
+            X_val = self._clean_features(X_val)
         self.feature_names = X_train.columns.tolist()
         
         # Prepare training data
@@ -111,6 +122,7 @@ class LightGBMModel(TimeSeriesModel):
         """Make predictions"""
         if self.model is None:
             raise ValueError("Model has not been trained yet")
+        X = self._clean_features(X)
         return self.model.predict(X, num_iteration=self.model.best_iteration)
     
     def get_feature_importance(self) -> pd.DataFrame:
@@ -143,6 +155,7 @@ class GradientBoostingModel(TimeSeriesModel):
               X_val: pd.DataFrame = None, y_val: pd.Series = None,
               weights_train: pd.Series = None, weights_val: pd.Series = None):
         """Train Gradient Boosting model"""
+        X_train = self._clean_features(X_train)
         self.feature_names = X_train.columns.tolist()
         self.model.fit(X_train, y_train, sample_weight=weights_train)
         
@@ -150,6 +163,7 @@ class GradientBoostingModel(TimeSeriesModel):
         """Make predictions"""
         if self.model is None:
             raise ValueError("Model has not been trained yet")
+        X = self._clean_features(X)
         return self.model.predict(X)
     
     def get_feature_importance(self) -> pd.DataFrame:
@@ -176,6 +190,9 @@ class XGBoostModel(TimeSeriesModel):
               X_val: pd.DataFrame = None, y_val: pd.Series = None,
               weights_train: pd.Series = None, weights_val: pd.Series = None):
         """Train XGBoost model"""
+        X_train = self._clean_features(X_train)
+        if X_val is not None:
+            X_val = self._clean_features(X_val)
         self.feature_names = X_train.columns.tolist()
         
         # Prepare training data
@@ -201,6 +218,7 @@ class XGBoostModel(TimeSeriesModel):
         """Make predictions"""
         if self.model is None:
             raise ValueError("Model has not been trained yet")
+        X = self._clean_features(X)
         dtest = xgb.DMatrix(X)
         return self.model.predict(dtest)
     

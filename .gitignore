@@ -2,9 +2,10 @@
 ts-forecasting/*.parquet
 *.parquet
 
-# Trained models
+# Trained models (large; do not push)
 *.pkl
 *.joblib
+# feature_columns.json is committed so clone + existing model can run predict; optional to ignore if you prefer not to track it
 
 # Submission output (optional)
 submission.csv

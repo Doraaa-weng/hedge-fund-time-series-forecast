@@ -3,18 +3,22 @@
 # Excludes large/data files and Chinese doc; includes code, config, README.
 
 set -e
-cd "$(dirname "$0")"
-ZIP="kaggle-project.zip"
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$PROJECT_ROOT"
+mkdir -p outputs
+ZIP="outputs/kaggle-project.zip"
 [ -f "$ZIP" ] && rm -f "$ZIP"
 
 zip -r "$ZIP" . \
   -x "*.parquet" \
   -x "*.pkl" \
   -x "*.zip" \
-  -x "submission.csv" \
-  -x "项目介绍_中文.md" \
+  -x "artifacts/*" \
+  -x "outputs/*" \
+  -x "reports/*" \
   -x ".git/*" \
   -x "__pycache__/*" \
+  -x ".cursor_tmp_pkgs/*" \
   -x "*.log" \
   -x ".DS_Store"
 

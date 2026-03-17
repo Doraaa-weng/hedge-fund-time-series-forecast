@@ -12,14 +12,14 @@ warnings.filterwarnings('ignore')
 import config
 
 
-def save_feature_columns(columns: List[str], path: str = "feature_columns.json") -> None:
+def save_feature_columns(columns: List[str], path: str = config.GB_FEATURE_COLUMNS_PATH) -> None:
     """Save training feature column names so predict/val can align to the same space."""
     with open(path, "w") as f:
         json.dump(list(columns), f)
 
 
 def align_features(X: pd.DataFrame,
-                  feature_columns_path: str = "feature_columns.json",
+                  feature_columns_path: str = config.GB_FEATURE_COLUMNS_PATH,
                   cols: Optional[List[str]] = None) -> pd.DataFrame:
     """
     Align feature columns to training-time columns: add missing (fill 0), drop extra, reorder.

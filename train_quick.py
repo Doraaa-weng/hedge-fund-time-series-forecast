@@ -63,8 +63,8 @@ def main():
     print(f"Validation set: {X_val.shape[0]} samples")
     
     # Save feature column names for predict/val alignment (GB-specific schema)
-    save_feature_columns(list(X_train.columns), "feature_columns_gb.json")
-    print(f"Saved {len(X_train.columns)} feature columns -> feature_columns_gb.json")
+    save_feature_columns(list(X_train.columns), config.GB_FEATURE_COLUMNS_PATH)
+    print(f"Saved {len(X_train.columns)} feature columns -> {config.GB_FEATURE_COLUMNS_PATH}")
     
     # Train model
     print("\n[5/5] Training Gradient Boosting model...")
@@ -102,9 +102,9 @@ def main():
     
     # Save model
     import pickle
-    with open('gradient_boosting_model.pkl', 'wb') as f:
+    with open(config.GB_MODEL_PATH, 'wb') as f:
         pickle.dump(gb_model, f)
-    print("\nModel saved to 'gradient_boosting_model.pkl'")
+    print(f"\nModel saved to '{config.GB_MODEL_PATH}'")
     
     print("\n" + "=" * 60)
     print("Quick training complete!")

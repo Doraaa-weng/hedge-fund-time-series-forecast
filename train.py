@@ -276,10 +276,10 @@ def main():
             }
         ]
     )
-    results_df.to_csv("training_results.csv", index=False)
+    results_df.to_csv(config.TRAINING_RESULTS_PATH, index=False)
     print(f"Saved model -> {config.GLOBAL_LGB_MODEL_PATH}")
     print(f"Saved metadata -> {config.GLOBAL_LGB_META_PATH}")
-    print("Results saved to 'training_results.csv'")
+    print(f"Results saved to '{config.TRAINING_RESULTS_PATH}'")
 
     print("\n" + "=" * 60)
     print("Training complete!")

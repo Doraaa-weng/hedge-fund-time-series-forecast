@@ -1,8 +1,14 @@
 """
 Configuration file for time series forecasting project.
-Paths auto-detect Kaggle (/kaggle/input) vs local (ts-forecasting/).
+Paths auto-detect Kaggle (/kaggle/input) vs local project directories.
 """
 import os
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS_DIR = os.path.join(ROOT_DIR, "scripts")
+ARTIFACTS_DIR = os.path.join(ROOT_DIR, "artifacts")
+OUTPUTS_DIR = os.path.join(ROOT_DIR, "outputs")
+REPORTS_DIR = os.path.join(ROOT_DIR, "reports")
 
 def _get_data_dir():
     """Use Kaggle input path if present, else local ts-forecasting."""
@@ -15,15 +21,22 @@ def _get_data_dir():
                 test_p = os.path.join(dirpath, "test.parquet")
                 if os.path.isfile(train_p) and os.path.isfile(test_p):
                     return dirpath
-    return "ts-forecasting"
+    return os.path.join(ROOT_DIR, "ts-forecasting")
 
 DATA_DIR = _get_data_dir()
 TRAIN_PATH = os.path.join(DATA_DIR, "train.parquet")
 TEST_PATH = os.path.join(DATA_DIR, "test.parquet")
-SUBMISSION_PATH = "submission.csv"
-MODEL_REGISTRY_PATH = "model_registry.json"
-GLOBAL_LGB_MODEL_PATH = "lightgbm_global_model.txt"
-GLOBAL_LGB_META_PATH = "lightgbm_global_meta.json"
+SUBMISSION_PATH = os.path.join(OUTPUTS_DIR, "submission.csv")
+TRAINING_RESULTS_PATH = os.path.join(OUTPUTS_DIR, "training_results.csv")
+MODEL_REGISTRY_PATH = os.path.join(ARTIFACTS_DIR, "model_registry.json")
+GLOBAL_LGB_MODEL_PATH = os.path.join(ARTIFACTS_DIR, "lightgbm_global_model.txt")
+GLOBAL_LGB_META_PATH = os.path.join(ARTIFACTS_DIR, "lightgbm_global_meta.json")
+GB_MODEL_PATH = os.path.join(ARTIFACTS_DIR, "gradient_boosting_model.pkl")
+GB_FEATURE_COLUMNS_PATH = os.path.join(ARTIFACTS_DIR, "feature_columns_gb.json")
+LEGACY_LGB_MODEL_PATH = os.path.join(ARTIFACTS_DIR, "lightgbm_model.pkl")
+
+for directory in (ARTIFACTS_DIR, OUTPUTS_DIR, REPORTS_DIR):
+    os.makedirs(directory, exist_ok=True)
 
 # Model parameters
 RANDOM_STATE = 42
